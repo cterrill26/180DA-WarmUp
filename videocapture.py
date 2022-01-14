@@ -13,12 +13,13 @@ while(True):
     mask_yellow = cv2.inRange(hsv, yellow_lower, yellow_upper)
 
     contours,hierarchy = cv2.findContours(mask_yellow, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    cnt = max(contours, key = cv2.contourArea)
+    if contours:
+        cnt = max(contours, key = cv2.contourArea)
 
-    rect = cv2.minAreaRect(cnt)
-    box = cv2.boxPoints(rect)
-    box = np.int0(box)
-    cv2.drawContours(img,[box],0,(0,0,255),2)
+        rect = cv2.minAreaRect(cnt)
+        box = cv2.boxPoints(rect)
+        box = np.int0(box)
+        cv2.drawContours(img,[box],0,(0,0,255),2)
 
     cv2.imshow('frame',img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
